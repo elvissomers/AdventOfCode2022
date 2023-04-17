@@ -17,7 +17,7 @@ import java.util.Optional;
 public class DayTwo {
 
     @GetMapping("1")
-    public int getAnswerTwo(){
+    public int getAnswerOne(){
         String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
         int score = 0;
@@ -61,7 +61,7 @@ public class DayTwo {
         return score;
     }
 
-    @GetMapping("1")
+    @GetMapping("2")
     public int getAnswerTwo(){
         String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
@@ -76,25 +76,30 @@ public class DayTwo {
                 char secondChar = line.charAt(2);
 
                 if (secondChar == 'X'){
-                    score += 1;
                     if (firstChar == 'A'){
                         score += 3;
+                    } else if (firstChar == 'B'){
+                        score += 1;
                     } else if (firstChar == 'C'){
-                        score += 6;
+                        score += 2;
                     }
                 } else if (secondChar == 'Y'){
-                    score += 2;
-                    if (firstChar == 'B'){
+                    score += 3;
+                    if (firstChar == 'A'){
+                        score += 1;
+                    } else if (firstChar == 'B'){
+                        score += 2;
+                    } else if (firstChar == 'C'){
                         score += 3;
-                    } else if (firstChar == 'A'){
-                        score += 6;
                     }
                 } else if (secondChar == 'Z'){
-                    score += 3;
-                    if (firstChar == 'C'){
-                        score += 3;
+                    score += 6;
+                    if (firstChar == 'A'){
+                        score += 2;
                     } else if (firstChar == 'B'){
-                        score += 6;
+                        score += 3;
+                    } else if (firstChar == 'C'){
+                        score += 1;
                     }
                 }
 
