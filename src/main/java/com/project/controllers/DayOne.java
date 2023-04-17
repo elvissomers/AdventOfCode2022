@@ -8,12 +8,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("1")
 public class DayOne {
     @GetMapping("1")
-    public int getAnswerOne(){
+    public Integer getAnswerOne(){
         String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_1.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
@@ -31,6 +32,11 @@ public class DayOne {
             e.printStackTrace();
         }
 
-        return 0;
+        Optional<Integer> answer = elfCalories.stream().max(Integer::compareTo);
+        if (answer.isPresent()){
+            return answer.get();
+        } else {
+            return 0;
+        }
     }
 }
