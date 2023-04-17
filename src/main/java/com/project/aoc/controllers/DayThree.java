@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("3")
@@ -17,15 +18,14 @@ public class DayThree {
 
     @GetMapping("1")
     public int getAnswerThree(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
+        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_3.txt";
         List<Character> doubledItems = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            reader: while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()){
                     continue;// go to next line
                 }
-                String str = "Hello World";
                 int mid = line.length() /2;
 
                 String firstHalf = line.substring(0, mid); // Extracts the first half of the string
@@ -35,6 +35,7 @@ public class DayThree {
                     char c = secondHalf.charAt(i);
                     if (firstHalf.contains(Character.toString(c))){
                         doubledItems.add(c);
+                        continue reader;
                     }
                 }
             }
@@ -42,6 +43,14 @@ public class DayThree {
             e.printStackTrace();
         }
 
-        return 0;
+//        int uppercaseCount = (int) doubledItems.stream().filter(Character::isUpperCase).count();
+
+        List<Integer> convertedNumbers = doubledItems.stream()
+                .map(c -> (c >= 'a' && c <= 'z') ? (c - 'a' + 1) : (c >= 'A' && c <= 'Z') ? (c - 'A' + 27) : 0)
+                .collect(Collectors.toList());
+
+        int sum = convertedNumbers.stream().mapToInt(Integer::intValue).sum();
+
+        return sum;
     }
 }
