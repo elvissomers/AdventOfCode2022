@@ -16,7 +16,19 @@ public class DayThree {
 
     @GetMapping("1")
     public int getAnswerThree(){
-        
+        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.isEmpty()){
+                    continue;// go to next line
+                }
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return 0;
     }
