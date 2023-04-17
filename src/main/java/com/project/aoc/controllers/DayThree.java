@@ -1,4 +1,23 @@
 package com.project.aoc.controllers;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("3")
 public class DayThree {
+
+    @GetMapping("1")
+    public int getAnswerThree(){
+        
+
+        return 0;
+    }
 }
