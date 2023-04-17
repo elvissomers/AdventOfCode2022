@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 
 @RestController
@@ -66,12 +67,13 @@ public class DayOne {
             e.printStackTrace();
         }
 
-        Optional<Integer> answer = elfCalories.stream().max(Integer::compareTo);
+        int answer = elfCalories.stream()
+                .sorted(Comparator.reverseOrder())
+                .limit(3)
+                .mapToInt(Integer::intValue)
+                .sum();
 
-        if (answer.isPresent()) {
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(answer.get());
-        } else {
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0);
-        }
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(answer);
+
     }
 }
