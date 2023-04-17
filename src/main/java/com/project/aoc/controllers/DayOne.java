@@ -44,4 +44,34 @@ public class DayOne {
             return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0);
         }
     }
+
+    @GetMapping("2")
+    public ResponseEntity<Integer> getAnswerTwo(){
+        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_1.txt";
+        ArrayList<Integer> elfCalories = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            String line;
+            int elfCount = 0;
+            elfCalories.add(0);
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    Integer currentCalories = elfCalories.get(elfCount);
+                    elfCalories.set(elfCount, currentCalories + Integer.parseInt(line.trim()));
+                } else {
+                    elfCount += 1;
+                    elfCalories.add(0);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Optional<Integer> answer = elfCalories.stream().max(Integer::compareTo);
+
+        if (answer.isPresent()) {
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(answer.get());
+        } else {
+            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0);
+        }
+    }
 }
