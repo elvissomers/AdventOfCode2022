@@ -18,13 +18,15 @@ public class DayFive {
      */
     public List<Deque<Character>> getStartStacks(List<String> startLines) {
         List<Deque<Character>> stacks = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 3; i++) {
             stacks.add(new ArrayDeque<>());
         }
+
+        Collections.reverse(startLines);
         for (String line : startLines) {
-            for (int i = 0; i < 9; i++ ){
+            for (int i = 0; i < 3; i++ ){
                 int letterPos = 4*i + 1;
-                stacks.get(i).offer(line.charAt(letterPos));
+                stacks.get(i).push(line.charAt(letterPos));
             }
         }
 
