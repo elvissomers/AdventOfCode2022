@@ -23,8 +23,8 @@ public class DayFive {
         }
         for (String line : startLines) {
             for (int i = 0; i < 9; i++ ){
-                int letterPos = 3*i + 1;
-
+                int letterPos = 4*i + 1;
+                stacks.get(i).offer(line.charAt(letterPos));
             }
         }
 
