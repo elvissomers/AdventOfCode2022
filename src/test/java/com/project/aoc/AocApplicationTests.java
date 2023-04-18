@@ -34,7 +34,7 @@ class AocApplicationTests {
 		List<String> lines = Arrays.asList(line1, line2, line3);
 
 		List<Deque<Character>> stacks = testCase.getStartStacks(lines);
-		assertEquals(stacks.get(1).getFirst(), 'D');
+		assertEquals(stacks.get(1).pop(), 'D');
 
 	}
 
@@ -50,4 +50,27 @@ class AocApplicationTests {
 
 	}
 
+	@Test
+	void getStacksSimpleTestFour() {
+		String line1 = "    [D]    \n";
+		String line2 = "[N] [C]    \n";
+		String line3 = "[Z] [M] [P]";
+		List<String> lines = Arrays.asList(line1, line2, line3);
+
+		List<Deque<Character>> stacks = testCase.getStartStacks(lines);
+		assertEquals(stacks.get(0).pop(), 'N');
+
+	}
+
+	@Test
+	void getStacksSimpleTestFive() {
+		String line1 = "    [D]    \n";
+		String line2 = "[N] [C]    \n";
+		String line3 = "[Z] [M] [P]";
+		List<String> lines = Arrays.asList(line1, line2, line3);
+
+		List<Deque<Character>> stacks = testCase.getStartStacks(lines);
+		assertEquals(stacks.get(2).pop(), 'P');
+
+	}
 }
