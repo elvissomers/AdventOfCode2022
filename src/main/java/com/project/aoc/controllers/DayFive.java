@@ -26,7 +26,10 @@ public class DayFive {
         for (String line : startLines) {
             for (int i = 0; i < 3; i++ ){
                 int letterPos = 4*i + 1;
-                stacks.get(i).push(line.charAt(letterPos));
+                char c = line.charAt(letterPos);
+                if (Character.isLetter(c)) {
+                    stacks.get(i).push(line.charAt(letterPos));
+                }
             }
         }
 
