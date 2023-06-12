@@ -4,16 +4,13 @@ import java.util.Set;
 
 public class Node {
 
-    private final String name;
-
     private final Object data;
 
     private final Node parent;
 
     private Set<Node> children;
 
-    public Node(String name, Object data, Node parent) {
-        this.name = name;
+    public Node(Object data, Node parent) {
         this.data = data;
         this.parent = parent;
     }
