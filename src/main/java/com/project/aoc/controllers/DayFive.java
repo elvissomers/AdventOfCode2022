@@ -47,11 +47,6 @@ public class DayFive {
             boolean readStart = false;
             reader:
             while ((line = reader.readLine()) != null) {
-                if (line.replaceAll("\\s+", "").equals("123456789")) {
-                    // Call the getStartStacks() helper function with the list of startLines
-                    stacks = getStartStacks(startLines);
-                    readStart = true;
-                }
                 if (!readStart){
                     startLines.add(line);
                 }
@@ -65,6 +60,11 @@ public class DayFive {
                         char moveCrate = stacks.get(fromStack).pop();
                         stacks.get(toStack).push(moveCrate);
                     }
+                }
+                if (line.replaceAll("\\s+", "").equals("123456789")) {
+                    // Call the getStartStacks() helper function with the list of startLines
+                    stacks = getStartStacks(startLines);
+                    readStart = true;
                 }
 
 
