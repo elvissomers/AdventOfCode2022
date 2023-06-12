@@ -80,4 +80,52 @@ public class DayFive {
         }
         return sb.toString();
     }
+
+    @GetMapping("2")
+    public String getAnswerTwo() {
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_5.txt";
+        List<String> startLines = new ArrayList<>();
+        List<Deque<Character>> stacks = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            String line;
+            boolean readStart = false;
+            reader:
+            while ((line = reader.readLine()) != null) {
+                if (!readStart){
+                    startLines.add(line);
+                }
+                if (readStart && !line.trim().isEmpty()){
+                    String[] words = line.split(" ");
+                    int amount = Integer.parseInt(words[1]);
+                    int fromStack = Integer.parseInt(words[3]) - 1;
+                    int toStack = Integer.parseInt(words[5]) - 1;
+
+                    Deque<Character> tempStack = new ArrayDeque<>();
+                    for (int i = 0; i < amount; i++){
+                        char moveCrate = stacks.get(fromStack).pop();
+                        tempStack.push(moveCrate);
+                    }
+                    while (!tempStack.isEmpty()) {
+                        stacks.get(toStack).push(tempStack.pop());
+                    }
+                }
+                if (line.replaceAll("\\s+", "").equals("123456789")) {
+                    // Call the getStartStacks() helper function with the list of startLines
+                    stacks = getStartStacks(startLines);
+                    readStart = true;
+                }
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Deque<Character> stack : stacks){
+            char topLetter = stack.pop();
+            sb.append(topLetter);
+        }
+        return sb.toString();
+    }
 }
