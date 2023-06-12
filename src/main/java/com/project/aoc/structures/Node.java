@@ -6,11 +6,11 @@ public class Node {
 
     private final Object data;
 
-    private final Node parent;
+    private final String parent;
 
-    private Set<Node> children;
+    private Set<String> children;
 
-    public Node(Object data, Node parent) {
+    public Node(Object data, String parent) {
         this.data = data;
         this.parent = parent;
     }
@@ -19,15 +19,15 @@ public class Node {
         return data;
     }
 
-    public Node getParent() {
+    public String getParent() {
         return parent;
     }
 
-    public Set<Node> getChildren() {
+    public Set<String> getChildren() {
         return children;
     }
 
-    public void addChild(Node child) {
+    public void addChild(String child) {
         children.add(child);
     }
 }
