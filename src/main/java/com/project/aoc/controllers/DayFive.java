@@ -14,7 +14,6 @@ import java.util.*;
 @RequestMapping("5")
 public class DayFive {
 
-    Logger logger = LoggerFactory.getLogger(DayFive.class);
     /**
      * Helper functions from here -
      */
@@ -43,7 +42,6 @@ public class DayFive {
         String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_4.txt";
         List<String> startLines = new ArrayList<>();
         List<Deque<Character>> stacks = new ArrayList<>();
-        logger.info("Tjhis working?");
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
             boolean readStart = false;
@@ -78,8 +76,6 @@ public class DayFive {
         StringBuilder sb = new StringBuilder();
         for (Deque<Character> stack : stacks){
             char topLetter = stack.pop();
-            logger.info("Hellooohoo?");
-            logger.info(String.valueOf(topLetter));
             sb.append(topLetter);
         }
         return sb.toString();
