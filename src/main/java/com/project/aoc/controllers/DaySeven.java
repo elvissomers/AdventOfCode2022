@@ -60,5 +60,23 @@ public class DaySeven {
      */
     public void readListOutput(Tree tree, BufferedReader reader, String nodeName){
         Node node = tree.get(nodeName);
+        String line;
+        try (reader) {
+        while ((line = reader.readLine()) != null) {
+            if (line.isEmpty()) {
+                continue;// go to next line
+            }
+            String[] words = line.split(" ");
+            if (words[0].equals("$"))
+                return;
+
+            int dataSize = (words[0].equals("dir")) ? 0 : Integer.parseInt(words[0]);
+            Node newNode = new Node(dataSize,nodeName);
+            tree.put(words[1], newNode);
+            node.addChild(words[1]);
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
