@@ -38,6 +38,8 @@ public class DaySeven {
                             Node newNode = new Node(0, currentParentTag);
                             currentNodeTag = words[2];
                             fileSystem.put(words[3], newNode);
+                            if(!words[2].equals("/"))
+                                currentParentTag = currentNodeTag;
                         } else {
                             currentNodeTag = currentParentTag;
                             assert currentNodeTag != null;
