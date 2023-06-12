@@ -62,15 +62,15 @@ public class DaySix {
                 else {
                     char[] letters = line.toCharArray();
                     charReader:
-                    for (int i = 0; i < line.length()-3; i++){
-                        char[] fourLetterGroup = Arrays.copyOfRange(letters, i, i+4);
-                        for (int k = 0; k < 4; k++){
-                            for (int j = 0; j < 4; j++){
+                    for (int i = 0; i < line.length()-13; i++){
+                        char[] fourLetterGroup = Arrays.copyOfRange(letters, i, i+14);
+                        for (int k = 0; k < 14; k++){
+                            for (int j = 0; j < 14; j++){
                                 if (k !=j && fourLetterGroup[k] == fourLetterGroup[j])
                                     continue charReader;
                             }
                         }
-                        noRepeat = i+4;
+                        noRepeat = i+14;
                         break;
                     }
                 }
