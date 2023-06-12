@@ -39,7 +39,7 @@ public class DayFive {
 
     @GetMapping("1")
     public String getAnswerOne() {
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_4.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_5.txt";
         List<String> startLines = new ArrayList<>();
         List<Deque<Character>> stacks = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {

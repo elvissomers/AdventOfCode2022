@@ -18,7 +18,7 @@ import java.util.Optional;
 public class DayOne {
     @GetMapping("1")
     public ResponseEntity<Integer> getAnswerOne(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_1.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_1.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
@@ -39,16 +39,13 @@ public class DayOne {
 
         Optional<Integer> answer = elfCalories.stream().max(Integer::compareTo);
 
-        if (answer.isPresent()) {
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(answer.get());
-        } else {
-            return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0);
-        }
+        return answer.map(integer -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(integer))
+                .orElseGet(() -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0));
     }
 
     @GetMapping("2")
     public ResponseEntity<Integer> getAnswerTwo(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_1.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_1.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;

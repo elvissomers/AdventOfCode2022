@@ -14,7 +14,7 @@ public class DayTwo {
 
     @GetMapping("1")
     public int getAnswerOne(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_2.txt";
         int score = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
@@ -58,7 +58,7 @@ public class DayTwo {
 
     @GetMapping("2")
     public int getAnswerTwo(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_2.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_2.txt";
         int score = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;

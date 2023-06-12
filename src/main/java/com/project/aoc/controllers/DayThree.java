@@ -18,7 +18,7 @@ public class DayThree {
 
     @GetMapping("1")
     public int getAnswerOne(){
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_3.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_3.txt";
         List<Character> doubledItems = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
@@ -54,7 +54,7 @@ public class DayThree {
 
     @GetMapping("2")
     public int getAnswerTwo() {
-        String inputFilePath = "C:\\Users\\elvis\\projects\\aoc_new\\data\\scraped_data_3.txt";
+        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_3.txt";
         List<Character> doubledItems = new ArrayList<>();
         List<String> group = new ArrayList<>();
         int count = 0;
