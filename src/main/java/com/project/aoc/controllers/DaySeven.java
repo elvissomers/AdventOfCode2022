@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 @RestController
@@ -99,7 +96,7 @@ public class DaySeven {
 //        printKids(fileSystem);
         ans = getAns(fileSystem);
         int ansTwo = getAnsTwo(fileSystem);
-        return ans;
+        return ansTwo;
     }
 
     /**
@@ -123,7 +120,15 @@ public class DaySeven {
     }
 
     public int getAnsTwo(Tree fileSystem) {
+        int systemSize = 70000000;
+        int requiredSpace = 30000000;
+        int availableSpace = systemSize - fileSystem.get("/").getData();
 
+        OptionalInt deleteOption = fileSystem.values().stream()
+                .filter(node -> node.getData() + availableSpace >= requiredSpace)
+                .mapToInt(Node::getData)
+                .min();
+        return deleteOption.getAsInt();
     }
 
 
