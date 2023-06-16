@@ -16,6 +16,12 @@ public class Node {
         this.parent = parent;
     }
 
+    public Node(int data, String parent, Set<String> children) {
+        this.data = data;
+        this.parent = parent;
+        this.children = children;
+    }
+
     public int getData() {
         return data;
     }
