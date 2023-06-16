@@ -27,26 +27,41 @@ public class DaySeven {
             String line;
             String currentNodeTag = null;
             String currentParentTag = null;
+            boolean readingLsOutput = false;
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
-                    continue;// go to next line
+                    continue;
                 }
                 String[] words = line.split(" ");
+                if (readingLsOutput) {
+                    int dataSize = (words[0].equals("dir")) ? 0 : Integer.parseInt(words[0]);
+                    Node newNode = new Node(dataSize,currentNodeTag);
+                    fileSystem.put(words[1], newNode);
+                    fileSystem.get(currentNodeTag).addChild(words[1]);
+                }
+
                 if (words[0].equals("$")) { // This is a command
                     if (words[1].equals("cd")) {
-                        if (!words[2].equals("..")){
-                            Node newNode = new Node(0, currentParentTag);
-                            currentNodeTag = words[2];
-                            fileSystem.put(words[3], newNode);
-                            if(!words[2].equals("/"))
-                                currentParentTag = currentNodeTag;
-                        } else {
+                        readingLsOutput = false;
+                        if (words[2].equals("..")) {
                             currentNodeTag = currentParentTag;
                             assert currentNodeTag != null;
                             currentParentTag = fileSystem.get(currentNodeTag).getParent();
+                        } else if (words[2].equals("/")) {
+                            continue;
+                            //TODO : take into account the possibility of multiple "cd /" commands (not the case in input)
+                        } else {
+                            // TODO: node is already in tree!
+                            currentParentTag = currentNodeTag;
+                            currentNodeTag = words[3];
                         }
+
                     } else if (words[1].equals("ls")) {
-                        readListOutput(fileSystem, reader, currentNodeTag);
+
+//                        readListOutput(fileSystem, reader, currentNodeTag);
+                        //TODO
+                        readingLsOutput = true;
+
                     }
                 }
             }
