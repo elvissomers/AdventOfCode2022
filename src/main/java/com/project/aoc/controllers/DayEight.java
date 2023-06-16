@@ -23,10 +23,13 @@ public class DayEight {
 
     private boolean[][] treeVisibleArray;
 
+    private int[][] scenicScores;
+
     @PostConstruct // This method will be called when the class is initialized
     public void init() {
         processInputFile();
         setBooleanArray();
+        setScenicScoresArray();
         checkAllVisibility();
     }
 
@@ -49,7 +52,11 @@ public class DayEight {
     }
 
     public void setBooleanArray() {
-        treeVisibleArray = new boolean[treeArray[1].length][treeArray.length];
+        treeVisibleArray = new boolean[treeArray[0].length][treeArray.length];
+    }
+
+    public void setScenicScoresArray() {
+        scenicScores = new int[treeArray[0].length][treeArray.length];
     }
 
     public void checkAllVisibility() {
@@ -64,38 +71,51 @@ public class DayEight {
 
     public void checkTreeVisibility(int xPos, int yPos) {
         int ySize = treeArray.length;
-        int xSize = treeArray[1].length;
+        int xSize = treeArray[0].length;
         int treeHeight = treeArray[xPos][yPos];
         boolean leftVisibility = true, rightVisibility = true, topVisibility = true, bottomVisibility = true;
+        int vd1 = 0, vd2 = 0, vd3 = 0, vd4 = 0;
+
+        if (xPos == 0 || yPos == 0) {
+            treeVisibleArray[xPos][yPos] = true;
+            scenicScores[xPos][yPos] = 0;
+            return;
+        }
 
         for (int x = xPos + 1; x < xSize; x += 1) {
+            vd1 += 1;
             int otherHeight = treeArray[x][yPos];
             if (otherHeight >= treeHeight) {
                 rightVisibility = false;
                 break;
             }
         }
-        for (int x = xPos - 1; x > 0; x -= 1) {
+        for (int x = xPos - 1; x >= 0; x -= 1) {
+            vd2 += 1;
             int otherHeight = treeArray[x][yPos];
             if (otherHeight >= treeHeight) {
                 leftVisibility = false;
                 break;
             }
         }
-        for (int y = xPos + 1; y < ySize; y += 1) {
+        for (int y = yPos + 1; y < ySize; y += 1) {
+            vd3 += 1;
             int otherHeight = treeArray[xPos][y];
             if (otherHeight >= treeHeight) {
                 topVisibility = false;
                 break;
             }
         }
-        for (int y = yPos - 1; y > 0; y -= 1) {
+        for (int y = yPos - 1; y >= 0; y -= 1) {
+            vd4 += 1;
             int otherHeight = treeArray[xPos][y];
             if (otherHeight >= treeHeight) {
                 bottomVisibility = false;
                 break;
             }
         }
+
+        scenicScores[xPos][yPos] = vd1 * vd2 * vd3 * vd4;
 
         if (!leftVisibility && !rightVisibility && !topVisibility && !bottomVisibility)
             treeVisibleArray[xPos][yPos] = false;
@@ -115,6 +135,18 @@ public class DayEight {
         return sum;
     }
 
+    public int getMax(int[][] array) {
+        int max = 0;
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (array[i][j] > max) { // If the value is true
+                    max = array[i][j];
+                }
+            }
+        }
+        return max;
+    }
+
     @GetMapping("1")
     public int getAnswerOne() {
         return getSum(treeVisibleArray);
@@ -122,7 +154,7 @@ public class DayEight {
 
     @GetMapping("2")
     public int getAnswerTwo() {
-        return 0;
+        return getMax(scenicScores);
     }
 
     private long countLines(String filePath) {
