@@ -2,6 +2,7 @@ package com.project.aoc.controllers;
 
 import com.project.aoc.structures.Node;
 import com.project.aoc.structures.Tree;
+import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,23 +16,54 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping("7")
 public class DaySeven {
+    private String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_7.txt";
+    private Tree fileSystem = new Tree();
+
+    @PostConstruct // This method will be called when the class is initialized
+    public void init() {
+        fileSystem.put("/", new Node(0, null)); // Setting base node
+        processInputFile();
+    }
 
     @GetMapping("1")
     public int getAnswerOne() {
-        // TODO: im assuming there are no doubled file names!
-        // TODO: this is not the case!! File names are doubles!
-        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_7.txt";
-        int ans = 0;
-        Tree fileSystem = new Tree();
-        fileSystem.put("/", new Node(0, null)); // Setting base node
+        return getAns(fileSystem);
+    }
+
+    @GetMapping("2")
+    public int getAnswerTwo() {
+        return getAnsTwo(fileSystem);
+    }
+
+    /**
+     * Helper methods from here
+     */
+    public int getAns(Tree fileSystem) {
+        return fileSystem.values().stream()
+                .filter(node -> node.getData() < 100000)
+                .filter(node -> !node.getChildren().isEmpty())
+                .mapToInt(Node::getData)
+                .sum();
+    }
+
+    public int getAnsTwo(Tree fileSystem) {
+        int systemSize = 70000000;
+        int requiredSpace = 30000000;
+        int availableSpace = systemSize - fileSystem.get("/").getData();
+
+        return fileSystem.values().stream()
+                .filter(node -> node.getData() + availableSpace >= requiredSpace)
+                .mapToInt(Node::getData)
+                .min()
+                .getAsInt();
+    }
+
+    private void processInputFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
             String currentNodeTag = null;
             String currentParentTag = null;
             boolean readingLsOutput = false;
-
-            long totalLines = countLines(inputFilePath); // get total lines for progress tracking
-            long currentLine = 0;
 
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
@@ -48,17 +80,12 @@ public class DaySeven {
                             currentParentTag = fileSystem.get(currentNodeTag).getParent();
                         } else if (words[2].equals("/")) {
                             currentNodeTag = words[2];
-                            //TODO : take into account the possibility of multiple "cd /" commands (not the case in input)
                         } else {
-                            // TODO: node is already in tree!
                             currentParentTag = currentNodeTag;
                             currentNodeTag += "/" + words[2];
                         }
 
                     } else if (words[1].equals("ls")) {
-
-//                        readListOutput(fileSystem, reader, currentNodeTag);
-                        //TODO
                         readingLsOutput = true;
 
                     }
@@ -67,9 +94,7 @@ public class DaySeven {
 
                 if (readingLsOutput) {
                     int dataSize = (words[0].equals("dir")) ? 0 : Integer.parseInt(words[0]);
-                    Node newNode = new Node(dataSize,currentNodeTag);
-                    // TODO: also add data size to all parent node, and to their parent etc
-                    // TODO: change files tags into entire name, starting from /
+                    Node newNode = new Node(dataSize, currentNodeTag);
                     String childNodeTag = currentNodeTag + "/" + words[1];
                     String tempParentTag = currentNodeTag;
 
@@ -77,60 +102,18 @@ public class DaySeven {
                         String currentTag = tempParentTag;
                         Node currentNode = fileSystem.get(currentTag);
                         tempParentTag = currentNode.getParent();
-//                        System.out.println(currentTag);
-//                        System.out.println(currentNode.getData());
-//                        System.out.println(currentNode.getData() + dataSize);
                         fileSystem.put(currentTag, new Node(currentNode.getData() + dataSize, tempParentTag,
                                 currentNode.getChildren()));
                     }
-//                    System.out.println(childNodeTag);
-//                    System.out.println(dataSize);
                     fileSystem.put(childNodeTag, newNode);
                     fileSystem.get(currentNodeTag).addChild(words[1]);
                 }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        printKids(fileSystem);
-        ans = getAns(fileSystem);
-        int ansTwo = getAnsTwo(fileSystem);
-        return ansTwo;
     }
-
-    /**
-     * Helper methods from here
-     */
-    public void printKids(Tree fileSystem) {
-        System.out.println("Debugging.... printie..");
-        for (Node node : fileSystem.values()){
-            System.out.println(node.getData());
-            System.out.println(node.getChildren());
-        }
-    }
-    public int getAns(Tree fileSystem){
-        int sumOfValuesLessThan100000 = fileSystem.values().stream()
-                .filter(node -> node.getData() < 100000)
-                .filter(node -> !node.getChildren().isEmpty())
-                .mapToInt(Node::getData)
-                .sum();
-        // Return the sum of elements
-        return sumOfValuesLessThan100000;
-    }
-
-    public int getAnsTwo(Tree fileSystem) {
-        int systemSize = 70000000;
-        int requiredSpace = 30000000;
-        int availableSpace = systemSize - fileSystem.get("/").getData();
-
-        OptionalInt deleteOption = fileSystem.values().stream()
-                .filter(node -> node.getData() + availableSpace >= requiredSpace)
-                .mapToInt(Node::getData)
-                .min();
-        return deleteOption.getAsInt();
-    }
-
 
     public void printProgressBar(long completed, long total) {
         int percent = (int) ((completed * 40) / total);
@@ -144,7 +127,7 @@ public class DaySeven {
                 bar.append(' ');
             }
         }
-        bar.append("]   " + 2.5*percent + "%     (" + completed + "/" + total + ")");
+        bar.append("]   " + 2.5 * percent + "%     (" + completed + "/" + total + ")");
         System.out.print('\r' + bar.toString());
     }
 
