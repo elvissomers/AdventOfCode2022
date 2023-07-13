@@ -9,10 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AocApplication {
 
 	public static void main(String[] args) {
-//		DayEight test8 = new DayEight();
-//		test8.processInputFile();
-//		test8.setBooleanArray();
-//		test8.checkTreeVisibility(1,4);
 		SpringApplication.run(AocApplication.class, args);
 	}
 
