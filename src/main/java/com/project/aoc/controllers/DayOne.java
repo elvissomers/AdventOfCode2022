@@ -16,36 +16,42 @@ import java.util.Optional;
 @RestController
 @RequestMapping("1")
 public class DayOne {
+
+    private final String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_1.txt";
+
+
     @GetMapping("1")
-    public ResponseEntity<Integer> getAnswerOne(){
-        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_1.txt";
+    public Integer getAnswerOne(){
         ArrayList<Integer> elfCalories = new ArrayList<>();
+
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
-            String line;
-            int elfCount = 0;
-            elfCalories.add(0);
-            while ((line = reader.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    Integer currentCalories = elfCalories.get(elfCount);
-                    elfCalories.set(elfCount, currentCalories + Integer.parseInt(line.trim()));
-                } else {
-                    elfCount += 1;
-                    elfCalories.add(0);
-                }
-            }
+            getElfCaloriesFromFileReader(elfCalories, reader);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Optional<Integer> answer = elfCalories.stream().max(Integer::compareTo);
+        return elfCalories.stream().max(Integer::compareTo).orElse(0);
+    }
 
-        return answer.map(integer -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(integer))
-                .orElseGet(() -> ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(0));
+    private void getElfCaloriesFromFileReader(ArrayList<Integer> elfCalories,
+                                                            BufferedReader reader) throws IOException {
+        String line;
+        int elfCount = 0;
+        elfCalories.add(0);
+
+        while ((line = reader.readLine()) != null) {
+            if (!line.trim().isEmpty()) {
+                Integer currentCalories = elfCalories.get(elfCount);
+                elfCalories.set(elfCount, currentCalories + Integer.parseInt(line.trim()));
+            } else {
+                elfCount += 1;
+                elfCalories.add(0);
+            }
+        }
     }
 
     @GetMapping("2")
     public ResponseEntity<Integer> getAnswerTwo(){
-        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_1.txt";
         ArrayList<Integer> elfCalories = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
