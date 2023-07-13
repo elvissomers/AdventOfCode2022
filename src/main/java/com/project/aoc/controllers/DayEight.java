@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 @RequestMapping("8")
 public class DayEight {
 
-    private String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_8.txt";
+    private final String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_8.txt";
 
     private int[][] treeArray;
 
