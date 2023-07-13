@@ -19,7 +19,7 @@ public class DayTwo {
         int score = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
-            getScoreFromFileReader(score, reader, true);
+            score = getScoreFromFileReader(score, reader, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +32,7 @@ public class DayTwo {
         int score = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
-            getScoreFromFileReader(score, reader, false);
+            score = getScoreFromFileReader(score, reader, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +40,7 @@ public class DayTwo {
         return score;
     }
 
-    private void getScoreFromFileReader(int score, BufferedReader reader, boolean strategyOneUsed) throws IOException {
+    private int getScoreFromFileReader(int score, BufferedReader reader, boolean strategyOneUsed) throws IOException {
         String line;
         while ((line = reader.readLine()) != null) {
             if (line.isEmpty()){
@@ -52,6 +52,7 @@ public class DayTwo {
             score = (strategyOneUsed) ? increaseScoreForStrategyOne(score, firstChar, secondChar) :
                 increaseScoreForStrategyTwo(score, firstChar, secondChar);
         }
+        return score;
     }
 
     private int increaseScoreForStrategyOne(int score, char firstChar, char secondChar) {
