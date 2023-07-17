@@ -55,21 +55,20 @@ public class DayFour {
                 if (line.isEmpty()) {
                     continue;
                 }
-                String[] numberStrings = line.split("[-,]");
-                int[] numbers = Arrays.stream(numberStrings).mapToInt(Integer::parseInt).toArray();
+                int[] numbers = getNumbersFromLine(line);
 
-                if ((numbers[3] >= numbers[1] && numbers[2] <= numbers[1]) || numbers[1] >= numbers[3] && numbers[0] <= numbers[3]) {
+                if (intervalOverlapsWithInterval(numbers[0], numbers[1], numbers[2], numbers[3]))
                     count += 1;
-                }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return count;
     }
 
+    private boolean intervalOverlapsWithInterval(int minOfIntervalOne, int maxOfIntervalOne,
+                                                 int minOfIntervalTwo, int maxOfIntervalTwo) {
+        return ((maxOfIntervalTwo >= maxOfIntervalOne && minOfIntervalTwo <= maxOfIntervalOne) ||
+                (maxOfIntervalOne >= maxOfIntervalTwo && minOfIntervalOne <= maxOfIntervalTwo));
+    }
 }
