@@ -1,7 +1,5 @@
 package com.project.aoc;
 
-import com.project.aoc.controllers.DayEight;
-import com.project.aoc.controllers.DaySeven;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
