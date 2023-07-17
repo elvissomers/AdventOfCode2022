@@ -38,22 +38,20 @@ public class DayThree {
             if (line.isEmpty()){
                 continue;
             }
-            doubledItems.add(findCommonCharacterInFirstAndSecondHalfOfString(line));
+            try {
+                doubledItems.add(findCommonCharacterInFirstAndSecondHalfOfString(line));
+            } catch (ElementNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private char findCommonCharacterInFirstAndSecondHalfOfString(String string) {
+    private char findCommonCharacterInFirstAndSecondHalfOfString(String string) throws ElementNotFoundException {
         int mid = string.length() /2;
-
         String firstHalf = string.substring(0, mid);
         String secondHalf = string.substring(mid);
 
-        try {
-            return findCommonCharacterInStrings(firstHalf, secondHalf);
-        } catch (ElementNotFoundException e) {
-            e.printStackTrace();
-            return 'E';
-        }
+        return findCommonCharacterInStrings(firstHalf, secondHalf);
     }
 
     private char findCommonCharacterInStrings(String string1, String string2) throws ElementNotFoundException {
