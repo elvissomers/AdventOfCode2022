@@ -12,50 +12,48 @@ import java.util.*;
 @RequestMapping("4")
 public class DayFour {
 
+    private final String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_4.txt";
+
     @GetMapping("1")
     public int getAnswerOne() {
-        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_4.txt";
         int count = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
-            reader:
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
-                    continue;// go to next line
+                    continue;
                 }
-                String[] numberStrings = line.split("[-,]");
-                int[] numbers = Arrays.stream(numberStrings).mapToInt(Integer::parseInt).toArray();
-
-                if (numbers[3] >= numbers[1] && numbers[2] <= numbers[0]) {
+                int[] numbers = getNumbersFromLine(line);
+                if (intervalIsFullyContainedWithinInterval(numbers[0], numbers[1], numbers[2], numbers[3])
+                        || intervalIsFullyContainedWithinInterval(numbers[2], numbers[3], numbers[0], numbers[1]))
                     count += 1;
-                }
-                if (numbers[1] >= numbers[3] && numbers[0] <= numbers[2]) {
-                    count += 1;
-                }
-                if (numbers[1] == numbers[3] && numbers[2] == numbers[0]) {
-                    count -= 1;
-                }
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
         return count;
+    }
+
+    private int[] getNumbersFromLine(String line) {
+        String[] numberStrings = line.split("[-,]");
+        return Arrays.stream(numberStrings)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+    }
+
+    private boolean intervalIsFullyContainedWithinInterval(int minOfIntervalOne, int maxOfIntervalOne,
+                                                           int minOfIntervalTwo, int maxOfIntervalTwo) {
+        return (maxOfIntervalTwo >= maxOfIntervalOne && minOfIntervalTwo <= minOfIntervalOne);
     }
 
     @GetMapping("2")
     public int getAnswerTwo() {
-        String inputFilePath = "C:\\Users\\eso13215\\IdeaProjects\\aoc_2022\\data\\scraped_data_4.txt";
         int count = 0;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
             String line;
-            reader:
             while ((line = reader.readLine()) != null) {
                 if (line.isEmpty()) {
-                    continue;// go to next line
+                    continue;
                 }
                 String[] numberStrings = line.split("[-,]");
                 int[] numbers = Arrays.stream(numberStrings).mapToInt(Integer::parseInt).toArray();
